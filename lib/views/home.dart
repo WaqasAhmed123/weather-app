@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:weather/views/detail_forecast.dart';
 import 'package:weather/widgets/hourly_weather_container.dart';
 
 import '../widgets/background_color.dart';
@@ -51,7 +52,45 @@ class _HomeViewState extends State<HomeView> {
                     height: 198,
                     width: 336,
                   )),
-                  hourlyWeatherWidget(context: context)
+                  hourlyWeatherWidget(context: context),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      IconButton(
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    const DetailForecastView()),
+                          );
+                        },
+                        icon: const Icon(Icons.location_on,
+                            color: Colors.white, size: 30),
+                      ),
+                      IconButton(
+                        onPressed: () {},
+                        icon: const Icon(Icons.add_circle_outline,
+                            color: Colors.white, size: 30),
+                      ),
+                    ],
+                  )
+                  //             BottomNavigationBar(
+                  //   // currentIndex: _currentIndex,
+                  //   currentIndex: 0,
+                  //   // onTap: _onTabTapped,
+                  //   // onTap:()=>Null,
+                  //   items: const [
+                  //     BottomNavigationBarItem(
+                  //       icon: Icon(Icons.location_on),
+                  //       label: 'Location',
+                  //     ),
+                  //     BottomNavigationBarItem(
+                  //       icon: Icon(Icons.add),
+                  //       label: 'Add',
+                  //     ),
+                  //   ],
+                  // ),
                 ],
               ),
             ),
