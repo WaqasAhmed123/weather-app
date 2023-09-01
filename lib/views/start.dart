@@ -41,7 +41,7 @@ class StartView extends StatelessWidget {
                 // height: MediaQuery.sizeOf(context).height * 0.05,
                 ),
             InkWell(
-              onTap: ()async {
+              onTap: () async {
                 Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(builder: (context) => const HomeView()),

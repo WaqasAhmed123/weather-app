@@ -4,6 +4,7 @@ class UserModel {
   static String? lat;
   static String? lng;
 
+
   static _requestLocationPermission() async {
     LocationPermission permission = await Geolocator.checkPermission();
     if (permission == LocationPermission.denied) {

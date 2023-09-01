@@ -6,10 +6,18 @@ import 'package:weather/veiw%20models/home_viewmodel.dart';
 import 'package:weather/views/detail_forecast.dart';
 import 'package:weather/views/start.dart';
 
+import 'models/weather_model.dart';
+
 void main() async {
+  // int timestamp = 1693591200;
+  // DateTime dt =
+  //     DateTime.fromMillisecondsSinceEpoch(timestamp * 1000, isUtc: true);
+
+  // print(dt.toLocal());
   WidgetsFlutterBinding.ensureInitialized();
   await UserModel.getCurrentLocation();
   await ApiServices.getWeatherData();
+  // print(WeatherItem);
   runApp(
     MultiProvider(
       providers: [
