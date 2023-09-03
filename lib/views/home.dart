@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:weather/services/api_services.dart';
 import 'package:weather/views/detail_forecast.dart';
 import 'package:weather/widgets/hourly_weather_container.dart';
 
@@ -34,13 +35,24 @@ class _HomeViewState extends State<HomeView> {
                       width: 150,
                     ),
                   ),
-                  const Text(
-                    '19\u00B0',
-                    style: TextStyle(
-                        fontFamily: 'Poppins',
-                        fontSize: 64,
-                        fontWeight: FontWeight.normal,
-                        color: Colors.white),
+                  FutureBuilder(
+                    future: ApiServices.getWeatherData(),
+                    builder: (context, snapshot) {
+                      final weatherData = snapshot.data!['weatherData'];
+         final temperatureKelvin = weatherData[0].weatherData['temp'];
+final temperatureCelsius = (temperatureKelvin - 273.15).toStringAsFixed(0);
+
+                      return Text(
+                        // '19\u00B0',
+                        '$temperatureCelsius\u00B0C',
+                        style: const TextStyle(
+                            fontFamily: 'Poppins',
+                            fontSize: 64,
+                            fontWeight: FontWeight.normal,
+                            color: Colors.white),
+                      );
+                    },
+                    // child:
                   ),
                   Text(
                     "Precipitations\nMax 20\u00B0  Min 18",

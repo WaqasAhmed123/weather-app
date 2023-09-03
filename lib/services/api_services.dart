@@ -6,18 +6,37 @@ import '../models/user_model.dart';
 import '../models/weather_model.dart';
 
 class ApiServices {
-  static getWeatherData() async {
-    var url =
-        "https://api.openweathermap.org/data/2.5/forecast?lat=${UserModel.lat}&lon=${UserModel.lng}&appid=0a0d1994bc7977871d6922c9b64a439f";
-    var response = await http.get(Uri.parse(url));
-    final jsonResponse = jsonDecode(response.body);
-    if (response.statusCode == 200) {
-      // final jsonResponse = jsonDecode(response.body);
-      // final data = WeatherItem.fromJson(jsonResponse);
-      // print(data);
-      // return WeatherItem.fromJson(jsonResponse);
-    } else {
-      throw Exception('Failed to load weather data');
+  static var url =
+      "https://api.openweathermap.org/data/2.5/forecast?lat=${UserModel.lat}&lon=${UserModel.lng}&appid=0a0d1994bc7977871d6922c9b64a439f";
+
+  static Future<Map<String, dynamic>> getWeatherData() async {
+    try {
+      var response = await http.get(Uri.parse(url));
+      final jsonResponse = jsonDecode(response.body);
+
+      if (response.statusCode == 200) {
+        final weatherData = List<WeatherItem>.from(jsonResponse['list'].map(
+                (json) => WeatherItem.fromJson(json as Map<String, dynamic>)))
+            .toList();
+
+        for (var item in weatherData) {
+          print('Temperature: ${item.weatherData["temp"]}°C');
+          print('Dates: ${item.dtTxt}°C');
+        }
+
+        final cityInfo = CityInfo.fromJson(jsonResponse['city']);
+        print(cityInfo);
+
+        return {
+          "weatherData": weatherData,
+          "cityInfo": cityInfo,
+        };
+      } else {
+        throw Exception('Failed to load weather data');
+      }
+    } catch (e) {
+      print('Error: $e');
+      throw e;
     }
   }
 }
