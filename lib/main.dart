@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:weather/models/user_model.dart';
-import 'package:weather/services/api_services.dart';
-import 'package:weather/veiw%20models/home_viewmodel.dart';
-import 'package:weather/views/detail_forecast.dart';
+import 'package:weather/view%20models/home_viewmodel.dart';
+import 'package:weather/views/home.dart';
 import 'package:weather/views/start.dart';
-
-import 'models/weather_model.dart';
 
 void main() async {
   // int timestamp = 1693591200;
@@ -16,14 +13,14 @@ void main() async {
   // print(dt.toLocal());
   WidgetsFlutterBinding.ensureInitialized();
   await UserModel.getCurrentLocation();
-  await ApiServices.getWeatherData();
+  // await ApiServices.getWeatherData();
   // print(WeatherItem);
   runApp(
     MultiProvider(
       providers: [
         ChangeNotifierProvider<HomeViewModel>(
             create: (context) => HomeViewModel()),
-        Provider(create: (context) => HomeViewModel()),
+        Provider(create: (context) => const HomeView()),
       ],
       child: const MyApp(),
     ),
