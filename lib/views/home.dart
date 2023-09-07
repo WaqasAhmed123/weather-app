@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:weather/views/detail_forecast.dart';
 import 'package:weather/view models/home_viewmodel.dart';
-import 'package:weather/widgets/hourly_weather_container.dart';
+import 'package:weather/widgets/feels_like_container.dart';
 
 import '../widgets/background_color.dart';
 
@@ -44,12 +44,20 @@ class _HomeViewState extends State<HomeView> {
                         // mainAxisAlignment: MainAxisAlignment.center,
                         // crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          Center(
-                            child: Image.asset(
-                              'assets/weather.png',
+                          Padding(
+                            padding: const EdgeInsets.only(top: 8.0),
+                            child: Center(
+                                child: Image.network(
+                              homeViewModel.weatherDescriptionIconUrl!,
+                              fit: BoxFit.cover,
+                              // scale: 100,
+                              //  Image.asset(
+                              //   'assets/weather.png',
                               height: 150,
                               width: 150,
-                            ),
+                            )
+                                // ),
+                                ),
                           ),
                           // FutureBuilder(
                           //   future: ApiServices.getWeatherData(),
@@ -61,22 +69,22 @@ class _HomeViewState extends State<HomeView> {
                           //       final temperatureCelsius =
                           //           (temperatureKelvin - 273.15).toStringAsFixed(0);
                           // return
-                          Consumer<HomeViewModel>(builder: (
-                            context,
-                            value,
-                            child,
-                          ) {
-                            debugPrint("rebuilded");
-                            return Text(
-                              // '19\u00B0',
-                              '${homeViewModel.currentTemp}\u00B0C',
-                              style: const TextStyle(
-                                  fontFamily: 'Poppins',
-                                  fontSize: 64,
-                                  fontWeight: FontWeight.normal,
-                                  color: Colors.white),
-                            );
-                          }),
+                          // Consumer<HomeViewModel>(builder: (
+                          //   context,
+                          //   value,
+                          //   child,
+                          // ) {
+                          //   debugPrint("rebuilded");
+                          Text(
+                            // '19\u00B0',
+                            '${homeViewModel.currentTemp}\u00B0C',
+                            style: const TextStyle(
+                                fontFamily: 'Poppins',
+                                fontSize: 64,
+                                fontWeight: FontWeight.normal,
+                                color: Colors.white),
+                          ),
+                          // }),
                           //     }
                           //     if (snapshot.connectionState == ConnectionState.waiting) {
                           //       return const CircularProgressIndicator();
@@ -85,41 +93,53 @@ class _HomeViewState extends State<HomeView> {
                           //   },
                           //   // child:
                           // ),
-                          Text(
-                            "Precipitations\nMax ${homeViewModel.maxTemp}\u00B0  Min ${homeViewModel.minTemp}\u00B0",
-                            style: Theme.of(context).textTheme.titleMedium,
+                          Center(
+                            child: Text(
+                              "${homeViewModel.weatherDescription}",
+                              style: Theme.of(context).textTheme.titleMedium,
+                            ),
                           ),
+                          Center(
+                            child: Text(
+                              "Max ${homeViewModel.maxTemp}\u00B0  Min ${homeViewModel.minTemp}\u00B0",
+                              style: Theme.of(context).textTheme.titleMedium,
+                            ),
+                          ),
+                          const SizedBox(height: 20),
                           Center(
                               child: Image.asset(
                             'assets/house.png',
                             height: 198,
                             width: 336,
                           )),
-                          hourlyWeatherWidget(context: context),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: [
-                              IconButton(
-                                onPressed: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            const DetailForecastView()),
-                                  );
-                                },
-                                icon: const Icon(Icons.location_on,
-                                    color: Colors.white, size: 30),
-                              ),
-                              IconButton(
-                                onPressed: () {
-                                  // homeViewModel.fetchCompleteData(setTemp: "28");
-                                },
-                                icon: const Icon(Icons.add_circle_outline,
-                                    color: Colors.white, size: 30),
-                              ),
-                            ],
-                          )
+
+                          feelsLikeContainerWidget(
+                              context: context,
+                              feelsLike: "${homeViewModel.feelsLike}\u00B0"),
+                          // Row(
+                          //   mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          //   children: [
+                          //     IconButton(
+                          //       onPressed: () {
+                          //         Navigator.push(
+                          //           context,
+                          //           MaterialPageRoute(
+                          //               builder: (context) =>
+                          //                   const DetailForecastView()),
+                          //         );
+                          //       },
+                          //       icon: const Icon(Icons.location_on,
+                          //           color: Colors.white, size: 30),
+                          //     ),
+                          //     IconButton(
+                          //       onPressed: () {
+                          //         // homeViewModel.fetchCompleteData(setTemp: "28");
+                          //       },
+                          //       icon: const Icon(Icons.add_circle_outline,
+                          //           color: Colors.white, size: 30),
+                          //     ),
+                          //   ],
+                          // )
                           //             BottomNavigationBar(
                           //   // currentIndex: _currentIndex,
                           //   currentIndex: 0,

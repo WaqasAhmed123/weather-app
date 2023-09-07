@@ -6,28 +6,31 @@ class HomeViewModel extends ChangeNotifier {
   String? currentTemp;
   String? minTemp;
   String? maxTemp;
+  String? feelsLike;
   String? weatherDescription;
-  String? weatherDescriptionIcon;
+  String? weatherDescriptionIconUrl;
   List<int> dailyWiseTemp = [];
   // List<WeatherItem> weatherData = [];
   fetchCompleteData() async {
     final completeWeatherData = await ApiServices.getWeatherData();
     final weatherData = completeWeatherData['weatherData'];
-    weatherDescription = weatherData[1].weatherData['description'];
-    weatherDescriptionIcon = weatherData[1].weatherData['icon'];
-    // print(weatherDescription);
-    // print(weatherDescriptionIcon);
+    weatherDescription =
+        completeWeatherData['weatherDescription']['description'];
+    weatherDescriptionIconUrl =
+        "http://openweathermap.org/img/w/${completeWeatherData['weatherDescription']['icon']}.png";
+    print(weatherDescription);
+    print(weatherDescriptionIconUrl);
 
     calculateDailyAverages(weatherData: weatherData);
-    final currentTemperatureKelvin = weatherData[0].weatherData['temp'];
-    final minTemperatureKelvin = weatherData[0].weatherData['temp_min'];
-    final maxTemperatureKelvin = weatherData[0].weatherData['temp_max'];
-    currentTemp = (currentTemperatureKelvin - 273.15).toStringAsFixed(0);
-    minTemp = (minTemperatureKelvin - 273.15).toStringAsFixed(0);
-    maxTemp = (maxTemperatureKelvin - 273.15).toStringAsFixed(0);
+    currentTemp =
+        (weatherData[0].weatherData['temp'] - 273.15).toStringAsFixed(0);
+    minTemp =
+        (weatherData[0].weatherData['temp_min'] - 273.15).toStringAsFixed(0);
+    maxTemp =
+        (weatherData[0].weatherData['temp_max'] - 273.15).toStringAsFixed(0);
+    feelsLike =
+        (weatherData[0].weatherData["feels_like"] - 273.15).toStringAsFixed(0);
     dataFetched = true;
-    print("---------------------");
-    print(dailyWiseTemp);
     notifyListeners();
   }
 
