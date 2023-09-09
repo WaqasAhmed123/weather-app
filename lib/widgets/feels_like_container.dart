@@ -57,16 +57,11 @@ Widget feelsLikeContainerWidget({context, feelsLike}) {
                         );
                       },
                       child: Text(
-                        'See More',
+                        'See More...',
                         style: Theme.of(context).textTheme.titleSmall,
                       )),
                 ],
               ),
-
-              // hourlyForecast(hour: 16, temp: 20,context: context),
-              // hourlyForecast(hour: 16, temp: 20,context: context),
-              // hourlyForecast(hour: 16, temp: 20,context: context),
-              // hourlyForecast(hour: 16, temp: 20,context: context),
             ],
           ),
         )
@@ -74,13 +69,3 @@ Widget feelsLikeContainerWidget({context, feelsLike}) {
     ),
   );
 }
-
-// Widget hourlyForecast({temp, hour,context}) {
-//   return Column(
-//     children: [
-//       Text("$temp",style:Theme.of(context).textTheme.bodyLarge),
-//       Image.asset('assets/weather.png',height: 20,width: 20,),
-//       Text("$hour",style:Theme.of(context).textTheme.bodyLarge),
-//     ],
-//   );
-// }

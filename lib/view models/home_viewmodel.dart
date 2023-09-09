@@ -16,7 +16,9 @@ class HomeViewModel extends ChangeNotifier {
   String? sunrise;
   String? sunset;
   // List<int> dayWiseTemp = [];
-  Map<String, int> dayWiseTemp = {};
+  // Map<String, int> dayWiseTemp = {};
+  final List<List<dynamic>> dayWiseTemp = [];
+
   // late DateTime sunrise =
   //     DateTime.fromMillisecondsSinceEpoch(sunRise * 1000, isUtc: true);
   // late DateTime sunset =
@@ -61,30 +63,34 @@ class HomeViewModel extends ChangeNotifier {
   }
 
   void calculateDailyAverages({weatherData}) {
-    final Map<String, List<double>> dailyTemperatureMap = {};
 
-    for (var item in weatherData) {
-      final date = item.dtTxt.split(' ')[0];
-      final temperatureKelvin = item.weatherData['temp'];
-      final temperatureCelsius = temperatureKelvin - 273.15;
+  final Map<String, List<double>> dailyTemperatureMap = {};
 
-      if (!dailyTemperatureMap.containsKey(date)) {
-        dailyTemperatureMap[date] = [];
-      }
+  for (var item in weatherData) {
+    final date = item.dtTxt.split(' ')[0];
+    final temperatureKelvin = item.weatherData['temp'];
+    final temperatureCelsius = temperatureKelvin - 273.15;
 
-      dailyTemperatureMap[date]!.add(temperatureCelsius);
+    if (!dailyTemperatureMap.containsKey(date)) {
+      dailyTemperatureMap[date] = [];
     }
 
-    // Calculate daily averages and add to the dayWiseTemp map
-    dailyTemperatureMap.forEach((date, temperatures) {
-      final dateTime = DateTime.parse(date);
-      final dayAbbreviation = DateFormat.E('en_US').format(dateTime);
-
-      final averageTemperature =
-          temperatures.reduce((a, b) => a + b) / temperatures.length;
-      dayWiseTemp[dayAbbreviation] = averageTemperature.round();
-    });
+    dailyTemperatureMap[date]!.add(temperatureCelsius);
   }
+
+  // Calculate daily averages and add to the dayWiseTempList
+  dailyTemperatureMap.forEach((date, temperatures) {
+    final dateTime = DateTime.parse(date);
+    final dayAbbreviation = DateFormat.E('en_US').format(dateTime);
+
+    final averageTemperature =
+        temperatures.reduce((a, b) => a + b) / temperatures.length;
+
+    dayWiseTemp.add([dayAbbreviation, averageTemperature.round()]);
+  });
+
+  // Now dayWiseTempList is a list of lists where each sublist contains [day abbreviation, temperature]
+}
 
   String formatTimestampTo12HourFormat(int timestamp) {
     final dateTime = DateTime.fromMillisecondsSinceEpoch(timestamp * 1000);

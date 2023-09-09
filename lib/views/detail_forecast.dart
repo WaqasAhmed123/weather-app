@@ -20,14 +20,14 @@ class _DetailForecastState extends State<DetailForecastView> {
     //     Provider.of<homeViewModel>(context, listen: false);
     final homeViewModel = Provider.of<HomeViewModel>(context, listen: false);
 
-    int currentIndex = 0;
-    List<Map<String, dynamic>> weatherData = [
-      {"day": "Monday", "temp": "25°C", "weather": "Sunny"},
-      {"day": "Tuesday", "temp": "23°C", "weather": "Cloudy"},
-      {"day": "Wednesday", "temp": "28°C", "weather": "Rainy"},
-      {"day": "Thursday", "temp": "26°C", "weather": "Partly Cloudy"},
-      {"day": "Friday", "temp": "24°C", "weather": "Windy"},
-    ];
+    // int currentIndex = 0;
+    // List<Map<String, dynamic>> weatherData = [
+    //   {"day": "Monday", "temp": "25°C", "weather": "Sunny"},
+    //   {"day": "Tuesday", "temp": "23°C", "weather": "Cloudy"},
+    //   {"day": "Wednesday", "temp": "28°C", "weather": "Rainy"},
+    //   {"day": "Thursday", "temp": "26°C", "weather": "Partly Cloudy"},
+    //   {"day": "Friday", "temp": "24°C", "weather": "Windy"},
+    // ];
     return Scaffold(
       // appBar: AppBar(
       //   title: Text('Weather Forecast'),
@@ -90,7 +90,7 @@ class _DetailForecastState extends State<DetailForecastView> {
                     //           temp: "20", day: "Mon", context: context)
                     //     ],
                     //   );
-                    // } 
+                    // }
                     //  if (index == 5) {
                     //   debugPrint("executed");
                     //   return Row(
@@ -113,13 +113,16 @@ class _DetailForecastState extends State<DetailForecastView> {
                     //     ],
                     //   );
                     // } else {
-                      
-                      return Row(
-                        children: [
-                          dailyWeatherContainer(
-                              temp: "20", day: "Mon", context: context)
-                        ],
-                      );
+
+                    return Row(
+                      children: [
+                        dailyWeatherContainer(
+                            temp:
+                                "${homeViewModel.dayWiseTemp[index + 1][1]}\u00B0",
+                            day: homeViewModel.dayWiseTemp[index + 1][0],
+                            context: context)
+                      ],
+                    );
                     // }
                   },
                 ),
