@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:weather/models/user_model.dart';
-import 'package:weather/view%20models/detail_forecast_viewmodel.dart';
 import 'package:weather/view%20models/home_viewmodel.dart';
-import 'package:weather/views/detail_forecast.dart';
 import 'package:weather/views/home.dart';
 import 'package:weather/views/start.dart';
 
@@ -23,9 +21,6 @@ void main() async {
         ChangeNotifierProvider<HomeViewModel>(
             create: (context) => HomeViewModel()),
         Provider(create: (context) => const HomeView()),
-        ChangeNotifierProvider<DetailForecastViewModel>(
-            create: (context) => DetailForecastViewModel()),
-        Provider(create: (context) => const DetailForecastView()),
       ],
       child: const MyApp(),
     ),

@@ -9,9 +9,6 @@ DateTime dateTime = DateTime.now();
 String formattedDate = DateFormat('MMMM d').format(dateTime);
 Widget feelsLikeContainerWidget({context, feelsLike}) {
   return Container(
-    // width: 428,
-    // height: 246,
-    // height: 150,
     decoration: BoxDecoration(
       gradient: gradientBackground,
       border: Border.all(color: Colors.transparent),
