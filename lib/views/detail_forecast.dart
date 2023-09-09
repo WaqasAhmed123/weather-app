@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:weather/widgets/daily_weather_container.dart';
 import 'package:weather/widgets/sun_timing.dart';
 
+import '../view models/home_viewmodel.dart';
 import '../widgets/background_color.dart';
 
 class DetailForecastView extends StatefulWidget {
@@ -14,6 +16,10 @@ class DetailForecastView extends StatefulWidget {
 class _DetailForecastState extends State<DetailForecastView> {
   @override
   Widget build(BuildContext context) {
+    // final homeViewModel =
+    //     Provider.of<homeViewModel>(context, listen: false);
+    final homeViewModel = Provider.of<HomeViewModel>(context, listen: false);
+
     int currentIndex = 0;
     List<Map<String, dynamic>> weatherData = [
       {"day": "Monday", "temp": "25°C", "weather": "Sunny"},
@@ -38,12 +44,12 @@ class _DetailForecastState extends State<DetailForecastView> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Text(
-                'Karachi',
+                "${homeViewModel.city}, ${homeViewModel.country}",
                 style: Theme.of(context).textTheme.titleMedium,
               ),
               // const SizedBox(height: 10),
               Text(
-                'Max: ${weatherData[currentIndex]['temp']}  Min: ${weatherData[currentIndex]['temp']}',
+                'Max: ${homeViewModel.maxTemp}\u00B0  Min: ${homeViewModel.minTemp}\u00B0',
                 style: Theme.of(context).textTheme.titleMedium,
               ),
               const SizedBox(height: 20),
@@ -121,9 +127,13 @@ class _DetailForecastState extends State<DetailForecastView> {
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   sunTiming(
-                      sunEvent: "SUNRISE", time: "5:28", context: context),
+                      sunEvent: "SUNRISE",
+                      time: homeViewModel.sunrise.toString(),
+                      context: context),
                   sunTiming(
-                      sunEvent: "SUNSET", time: "7:28", context: context),
+                      sunEvent: "SUNSET",
+                      time: homeViewModel.sunset.toString(),
+                      context: context),
                 ],
               ),
             ],

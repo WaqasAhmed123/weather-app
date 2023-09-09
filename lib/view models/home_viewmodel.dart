@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:weather/services/api_services.dart';
+import 'package:weather/view%20models/detail_forecast_viewmodel.dart';
 
 class HomeViewModel extends ChangeNotifier {
   bool dataFetched = false;
@@ -9,11 +11,33 @@ class HomeViewModel extends ChangeNotifier {
   String? feelsLike;
   String? weatherDescription;
   String? weatherDescriptionIconUrl;
-  List<int> dailyWiseTemp = [];
+  List<int> dayWiseTemp = [];
+  String? city;
+  String? country;
+  String? sunrise;
+  String? sunset;
+  // late DateTime sunrise =
+  //     DateTime.fromMillisecondsSinceEpoch(sunRise * 1000, isUtc: true);
+  // late DateTime sunset =
+  //     DateTime.fromMillisecondsSinceEpoch(sunSet * 1000, isUtc: true);
+
+  DetailForecastViewModel detailForecastViewModel = DetailForecastViewModel();
   // List<WeatherItem> weatherData = [];
   fetchCompleteData() async {
     final completeWeatherData = await ApiServices.getWeatherData();
     final weatherData = completeWeatherData['weatherData'];
+    final cityData = completeWeatherData['cityInfo'];
+    print(cityData.city);
+    city = cityData.city;
+    country = cityData.country;
+    sunrise = formatTimestampTo12HourFormat(cityData.sunrise).toString();
+    sunset = formatTimestampTo12HourFormat(cityData.sunset).toString();
+    // sunRise = cityData.sunrise;
+    // sunSet = cityData.sunset;
+    // print(detailForecastViewModel.city);
+    // print(detailForecastViewModel.country);
+    // print(detailForecastViewModel.sunRise);
+    // print(detailForecastViewModel.sunSet);
     weatherDescription =
         completeWeatherData['weatherDescription']['description'];
     weatherDescriptionIconUrl =
@@ -35,9 +59,6 @@ class HomeViewModel extends ChangeNotifier {
   }
 
   void calculateDailyAverages({weatherData}) {
-    // Clear the existing dailyWiseTemp list
-
-    // Group hourly data by date
     final Map<String, List<double>> dailyTemperatureMap = {};
 
     for (var item in weatherData) {
@@ -52,12 +73,18 @@ class HomeViewModel extends ChangeNotifier {
       dailyTemperatureMap[date]!.add(temperatureCelsius);
     }
 
-    // Calculate daily averages and add to the dailyWiseTemp list
+    // Calculate daily averages and add to the dayWiseTemp list
     dailyTemperatureMap.forEach((date, temperatures) {
       final averageTemperature =
           temperatures.reduce((a, b) => a + b) / temperatures.length;
-      dailyWiseTemp.add(averageTemperature.round());
+      dayWiseTemp.add(averageTemperature.round());
     });
+  }
+
+  String formatTimestampTo12HourFormat(int timestamp) {
+    final dateTime = DateTime.fromMillisecondsSinceEpoch(timestamp * 1000);
+    final formattedTime = DateFormat('h:mm a').format(dateTime); // 'h:mm a' for 12-hour format
+    return formattedTime;
   }
 
   // int _currentIndex = 0;
