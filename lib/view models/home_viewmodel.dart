@@ -11,11 +11,12 @@ class HomeViewModel extends ChangeNotifier {
   String? feelsLike;
   String? weatherDescription;
   String? weatherDescriptionIconUrl;
-  List<int> dayWiseTemp = [];
   String? city;
   String? country;
   String? sunrise;
   String? sunset;
+  // List<int> dayWiseTemp = [];
+  Map<String, int> dayWiseTemp = {};
   // late DateTime sunrise =
   //     DateTime.fromMillisecondsSinceEpoch(sunRise * 1000, isUtc: true);
   // late DateTime sunset =
@@ -46,6 +47,7 @@ class HomeViewModel extends ChangeNotifier {
     print(weatherDescriptionIconUrl);
 
     calculateDailyAverages(weatherData: weatherData);
+    print(dayWiseTemp);
     currentTemp =
         (weatherData[0].weatherData['temp'] - 273.15).toStringAsFixed(0);
     minTemp =
@@ -73,17 +75,21 @@ class HomeViewModel extends ChangeNotifier {
       dailyTemperatureMap[date]!.add(temperatureCelsius);
     }
 
-    // Calculate daily averages and add to the dayWiseTemp list
+    // Calculate daily averages and add to the dayWiseTemp map
     dailyTemperatureMap.forEach((date, temperatures) {
+      final dateTime = DateTime.parse(date);
+      final dayAbbreviation = DateFormat.E('en_US').format(dateTime);
+
       final averageTemperature =
           temperatures.reduce((a, b) => a + b) / temperatures.length;
-      dayWiseTemp.add(averageTemperature.round());
+      dayWiseTemp[dayAbbreviation] = averageTemperature.round();
     });
   }
 
   String formatTimestampTo12HourFormat(int timestamp) {
     final dateTime = DateTime.fromMillisecondsSinceEpoch(timestamp * 1000);
-    final formattedTime = DateFormat('h:mm a').format(dateTime); // 'h:mm a' for 12-hour format
+    final formattedTime =
+        DateFormat('h:mm a').format(dateTime); // 'h:mm a' for 12-hour format
     return formattedTime;
   }
 

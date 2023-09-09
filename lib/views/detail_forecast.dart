@@ -68,57 +68,59 @@ class _DetailForecastState extends State<DetailForecastView> {
                 height: 160, // Set the desired height for the ListView
                 child: ListView.builder(
                   scrollDirection: Axis.horizontal,
-                  itemCount: 6,
+                  itemCount: 5,
                   itemBuilder: (context, index) {
-                    if (index == 0) {
+                    // if (index == 0) {
+                    //   return Row(
+                    //     children: [
+                    //       IconButton(
+                    //         icon: const Icon(
+                    //           Icons.chevron_left,
+                    //           color: Colors.white,
+                    //         ),
+                    //         onPressed: () {
+                    //           if (currentIndex > 0) {
+                    //             setState(() {
+                    //               currentIndex--;
+                    //             });
+                    //           }
+                    //         },
+                    //       ),
+                    //       dailyWeatherContainer(
+                    //           temp: "20", day: "Mon", context: context)
+                    //     ],
+                    //   );
+                    // } 
+                    //  if (index == 5) {
+                    //   debugPrint("executed");
+                    //   return Row(
+                    //     children: [
+                    //       dailyWeatherContainer(
+                    //           temp: "20", day: "Mon", context: context),
+                    //       IconButton(
+                    //         icon: const Icon(
+                    //           Icons.chevron_right,
+                    //           color: Colors.white,
+                    //         ),
+                    //         onPressed: () {
+                    //           if (currentIndex > 0) {
+                    //             setState(() {
+                    //               currentIndex--;
+                    //             });
+                    //           }
+                    //         },
+                    //       ),
+                    //     ],
+                    //   );
+                    // } else {
+                      
                       return Row(
                         children: [
-                          IconButton(
-                            icon: const Icon(
-                              Icons.chevron_left,
-                              color: Colors.white,
-                            ),
-                            onPressed: () {
-                              if (currentIndex > 0) {
-                                setState(() {
-                                  currentIndex--;
-                                });
-                              }
-                            },
-                          ),
                           dailyWeatherContainer(
                               temp: "20", day: "Mon", context: context)
                         ],
                       );
-                    } else if (index == 5) {
-                      debugPrint("executed");
-                      return Row(
-                        children: [
-                          dailyWeatherContainer(
-                              temp: "20", day: "Mon", context: context),
-                          IconButton(
-                            icon: const Icon(
-                              Icons.chevron_right,
-                              color: Colors.white,
-                            ),
-                            onPressed: () {
-                              if (currentIndex > 0) {
-                                setState(() {
-                                  currentIndex--;
-                                });
-                              }
-                            },
-                          ),
-                        ],
-                      );
-                    } else {
-                      return Row(
-                        children: [
-                          dailyWeatherContainer(
-                              temp: "20", day: "Mon", context: context)
-                        ],
-                      );
-                    }
+                    // }
                   },
                 ),
               ),
