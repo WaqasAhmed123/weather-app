@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:weather/views/detail_forecast.dart';
 import 'package:weather/view models/home_viewmodel.dart';
 import 'package:weather/widgets/feels_like_container.dart';
 
